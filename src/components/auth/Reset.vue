@@ -2,19 +2,6 @@
   <div id="signup">
     <div class="signup-form">
       <form @submit.prevent="onSubmit">
-        <error v-if="error" :error="error" />
-        <div class="input">
-          <label for="phone">شماره تماس</label>
-          <input
-            type="number"
-            id="phone"
-            v-model.number="phone"
-            @blur="validateUser"
-          />
-          <p class="error text-right py-2" v-if="userVal === 'invalid'">
-            شماره تماس خود را وارد کنید
-          </p>
-        </div>
         <div class="input">
           <label for="password">رمز عبور</label>
           <input
@@ -58,10 +45,6 @@
             </p>
           </div>
         </div>
-        <div class="input inline">
-          <label for="terms" class="px-2">با قوانین موافقم</label>
-          <input type="checkbox" id="terms" v-model="terms" />
-        </div>
         <div class="submit">
           <button type="submit" :disabled="!terms">ثبت</button>
         </div>
@@ -72,43 +55,24 @@
 
 <script>
 import axios from "axios";
-import Error from "./Error.vue";
 export default {
-  components: { Error },
   data() {
     return {
-      phone: "",
       password: "",
       password_confirmation: "",
-      type: "4",
-      terms: false,
-      userVal: "",
       passVal: "",
       confPassVal: "",
-      error: "",
     };
   },
   methods: {
     async onSubmit() {
-      try {
-        const response = await axios.post("register", {
-          type: this.type,
-          phone: this.phone,
-          password: this.password,
-          password_confirmation: this.password_confirmation,
-        });
-        console.log(response);
-        this.$router.push("/login");
-      } catch (e) {
-        this.error = "شماره تماس تکراری";
-      }
-    },
-    validateUser() {
-      if (this.phone === "") {
-        this.userVal = "invalid";
-      } else {
-        this.userVal = "valid";
-      }
+      const response = await axios.post("reset", {
+        password: this.password,
+        password_confirmation: this.password_confirmation,
+        token: this.$route.params.token,
+      });
+      console.log(response);
+      this.$router.push("/login");
     },
     validatePass() {
       if (this.password === "") {
@@ -124,9 +88,6 @@ export default {
         this.confPassVal = "valid";
       }
     },
-  },
-  created() {
-    console.log("form", this.terms);
   },
 };
 </script>

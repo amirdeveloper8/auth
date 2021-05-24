@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <app-header :user="user" />
+    <app-header />
+    <sidebar v-if="user" />
     <transition name="slide" mode="out-in">
-      <router-view :user="user" />
+      <router-view />
     </transition>
   </div>
 </template>
@@ -10,21 +11,25 @@
 <script>
 import Header from "./components/header/Header";
 import axios from "axios";
+import { mapGetters } from "vuex";
+import Sidebar from "./components/dashboard/Sidebar.vue";
 export default {
   name: "App",
   components: {
     "app-header": Header,
+    Sidebar,
   },
-  data() {
-    return {
-      user: null,
-    };
-  },
-  async created() {
-    const response = await axios.get("user");
-    this.user = response.data;
 
-    console.log(response);
+  computed: {
+    ...mapGetters(["user"]),
+  },
+
+  async created() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const response = await axios.get("user");
+      this.$store.dispatch("user", response.data);
+    }
   },
 };
 </script>

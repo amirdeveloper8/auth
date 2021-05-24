@@ -22,13 +22,22 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
-  props: ["user"],
   methods: {
-    handleClick() {
+    async handleClick() {
+      const response = await axios.post("logout", {
+        user: null,
+      });
+      console.log(response);
       localStorage.removeItem("token");
+      this.$store.dispatch("user", null);
       this.$router.push("/login");
     },
+  },
+  computed: {
+    ...mapGetters(["user"]),
   },
 };
 </script>

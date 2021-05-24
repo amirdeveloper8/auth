@@ -1,36 +1,19 @@
 <template>
-  <div id="signin">
-    <div class="signin-form">
-      <form @submit.prevent="onSubmit">
-        <error v-if="error" :error="error" />
-        <div class="input">
-          <label for="phone">شماره تماس</label>
-          <input
-            class="form-control"
-            type="number"
-            id="phone"
-            v-model.number="phone"
-          />
-        </div>
-        <div class="input">
-          <label for="password">رمزعبور</label>
-          <input
-            class="form-control"
-            type="password"
-            id="password"
-            v-model="password"
-          />
-        </div>
-        <div class="submit">
-          <button type="submit">تایید</button>
-        </div>
-        <div class="forgot">
-          <router-link class="forgot-link" to="forgot"
-            >فراموشی رمز عبور</router-link
-          >
-        </div>
-      </form>
+  <div class="form">
+    <div v-if="message" class="alert alert-success">
+      {{ message }}
     </div>
+    <error v-if="error" :error="error" />
+    <form @submit.prevent="handleSubmit">
+      <div class="input">
+        <label for="phone">شماره تماس</label>
+        <input type="text" class="form-control" />
+      </div>
+
+      <div class="submit">
+        <button type="submit">تایید</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -38,29 +21,23 @@
 import axios from "axios";
 import Error from "./Error.vue";
 export default {
-  components: {
-    Error,
-  },
+  components: { Error },
   data() {
     return {
       phone: "",
-      password: "",
-      error: "",
+      message: "",
     };
   },
   methods: {
-    async onSubmit() {
+    async handleSubmit() {
       try {
-        const response = await axios.post("login", {
+        const response = await axios.post("forgot", {
           phone: this.phone,
-          password: this.password,
         });
-        localStorage.setItem("token", response.data.token);
         console.log(response);
-        this.$store.dispatch("user", response.data.user);
-        this.$router.push("/dashboard");
+        this.message = "ارسال شد";
       } catch (e) {
-        this.error = "شماره تماس یا رمز عبور اشتباه است";
+        this.error = "شماره تماس اشتباه";
       }
     },
   },
@@ -68,7 +45,7 @@ export default {
 </script>
 
 <style scoped>
-.signin-form {
+.form {
   width: 400px;
   margin: 30px auto;
   border: 1px solid #eee;
@@ -143,20 +120,5 @@ export default {
   background-color: transparent;
   color: #ccc;
   cursor: not-allowed;
-}
-
-.forgot {
-  margin-top: 2%;
-  text-align: right;
-}
-
-.forgot-link {
-  color: aquamarine;
-  font-size: 16px;
-}
-
-.forgot-link:hover {
-  color: rgb(127, 168, 255);
-  text-decoration: none;
 }
 </style>
