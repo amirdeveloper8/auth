@@ -8,7 +8,7 @@
 import axios from "axios";
 export default {
   async created() {
-    const response = await axios.get("user.json");
+    const response = await axios.get("user");
 
     console.log(response);
   },

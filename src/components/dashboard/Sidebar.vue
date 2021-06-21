@@ -38,20 +38,20 @@
             <a class="nav-link text-right py-0">تکمیل اطلاعات</a>
           </div>
           <div class="icon-sidebar">
-            <i class="fab fa-wpforms"></i>
+            <i class="fas fa-id-card"></i>
           </div>
         </router-link>
         <router-link
-          to="/dashboard-change-password"
+          to="/dashboard-file"
           class="nav-item mx-2 my-2 d-flex justify-content-end align-items-center px-3"
           active-class="active"
           tag="li"
         >
           <div class="text-sidebar">
-            <a class="nav-link text-right py-0">تغییر رمز عبور</a>
+            <a class="nav-link text-right py-0">ارسال فایل ها</a>
           </div>
           <div class="icon-sidebar">
-            <i class="fas fa-key"></i>
+            <i class="fas fa-file-upload"></i>
           </div>
         </router-link>
       </ul>
@@ -94,5 +94,9 @@
   flex-basis: 10%;
   font-size: 16px;
   text-align: right;
+}
+
+.icon-sidebar i {
+  font-size: 16px;
 }
 </style>

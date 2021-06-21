@@ -33,7 +33,7 @@ export default {
       console.log(response);
       localStorage.removeItem("token");
       this.$store.dispatch("user", null);
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
   },
   computed: {

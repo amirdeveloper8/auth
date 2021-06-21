@@ -1,147 +1,48 @@
 <template>
-  <div class="container-fluid" id="user-details">
-    <h1 class="px-4" style="text-align:center">اطلاعات ثبت شده</h1>
-    <div class="row">
-      <div
-        v-for="(users, name, index) in user"
-        :key="users"
-        class="col-sm-12 col-md-3 mt-4 box"
-        :class="name"
-      >
+  <div>
+    <div v-if="user" class="container-fluid" id="user-details">
+      <h1 class="px-4" style="text-align:center">اطلاعات ثبت شده</h1>
+      <div class="row">
         <div
-          class="d-flex justify-content-center align-items-center boxes"
-          :class="'boxes' + index"
+          v-for="(users, name, index) in user"
+          :key="users"
+          class="col-sm-12 col-md-3 mt-4 box"
+          :class="name"
         >
-          <div class="content">
-            <h4>
-              {{ name }}
-            </h4>
-            <p>
-              {{ users }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
+          <div
+            class="d-flex justify-content-center align-items-center boxes"
+            :class="'boxes' + index"
+          >
+            <div class="content">
+              <h4>
+                {{ name }}
+              </h4>
+              <p>
+                {{ users }}
+              </p>
+            </div>
+            <div class="icon px-2">
+              <i class="fas fa-user"></i>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        {{ user }}
-      </div>
-
-      <!-- <div class="col-sm-12 col-md-3 mt-4">
-        <div
-          class="d-flex justify-content-center align-items-center boxes"
-          style="border-color:rgb(0, 51, 128);"
-        >
-          <div class="content">
-            <h4>
-              شماره تماس
-            </h4>
-            <p>
-              {{ user.phone }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
-          </div>
+        <div>
+          {{ user }}
         </div>
       </div>
-
-      <div class="col-sm-12 col-md-3 mt-4">
-        <div
-          class="d-flex justify-content-center align-items-center boxes"
-          style="border-color:rgb(189, 118, 12);"
-        >
-          <div class="content">
-            <h4>
-              ایمیل
-            </h4>
-            <p>
-              {{ user.email }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
-          </div>
-        </div>
+    </div>
+    <div v-else class="container">
+      <h2 class="text-center bg-secondary text-white p-4">
+        لطفا با حساب کاربری خود وارد شوید
+      </h2>
+      <div class="text-center">
+        <router-link class="btn btn-primary" to="/login">ورود</router-link>
       </div>
-
-      <div class="col-sm-12 col-md-3 mt-4">
-        <div
-          class="d-flex justify-content-center align-items-center boxes"
-          style="border-color:rgb(221, 31, 47);"
+      <div class="text-center">
+        <router-link class="btn btn-primary mt-2" to="/register"
+          >ثبت نام</router-link
         >
-          <div class="content">
-            <h4>
-              کد ملی
-            </h4>
-            <p>
-              {{ user.nationalid }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
-          </div>
-        </div>
       </div>
-
-      <div class="col-sm-12 col-md-3 mt-4">
-        <div
-          class="d-flex justify-content-center align-items-center boxes"
-          style="border-color:rgb(221, 31, 47);"
-        >
-          <div class="content">
-            <h4>
-              کد پستی
-            </h4>
-            <p>
-              {{ user.postalcode }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-3 mt-4">
-        <div
-          class="d-flex justify-content-center align-items-center boxes"
-          style="border-color:rgb(221, 31, 47);"
-        >
-          <div class="content">
-            <h4>
-              شماره پرونده
-            </h4>
-            <p>
-              {{ user.filenumber }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-3 mt-4">
-        <div
-          class="d-flex justify-content-center align-items-center boxes"
-          style="border-color:rgb(221, 31, 47);"
-        >
-          <div class="content">
-            <h4>
-              دسته
-            </h4>
-            <p>
-              {{ user.groupsname }}
-            </p>
-          </div>
-          <div class="icon px-2">
-            <i class="fas fa-user"></i>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>

@@ -1,101 +1,122 @@
 <template>
-  <div id="complete-details">
-    <h1 class="text-center py-2">تکمیل اطلاعات</h1>
-    <div class="complete-form">
-      <form @submit.prevent="onCompelete">
-        <div class="input">
-          <label for="name">نام</label>
-          <input type="name" id="name" v-model="user.name" />
-          <p class="error text-right py-2" v-if="nameVal === 'invalid'">
-            نام خود را وارد کنید
-          </p>
-        </div>
+  <div>
+    <div v-if="user" id="complete-details">
+      <h1 class="text-center py-2">تکمیل اطلاعات</h1>
+      <div class="complete-form">
+        <form @submit.prevent="onCompelete">
+          <div class="input">
+            <label for="name">نام</label>
+            <input type="name" id="name" v-model="user.name" />
+            <p class="error text-right py-2" v-if="nameVal === 'invalid'">
+              نام خود را وارد کنید
+            </p>
+          </div>
 
-        <div class="input">
-          <label for="email">ایمیل</label>
-          <input type="email" id="email" v-model="user.email" />
-          <p class="error text-right py-2" v-if="emailVal === 'invalid'">
-            ایمیل خود را وارد کنید
-          </p>
-        </div>
+          <div class="input">
+            <label for="email">ایمیل</label>
+            <input type="email" id="email" v-model="user.email" />
+            <p class="error text-right py-2" v-if="emailVal === 'invalid'">
+              ایمیل خود را وارد کنید
+            </p>
+          </div>
 
-        <div class="input">
-          <label for="nationalid">کد ملی</label>
-          <input
-            type="number"
-            id="nationalid"
-            v-model.number="user.nationalid"
-          />
-          <p class="error text-right py-2" v-if="nationalidVal === 'invalid'">
-            کد ملی خود را وارد کنید
-          </p>
-          <p class="error text-right py-2" v-if="nationalidVal === 'incorrect'">
-            کد ملی خود را به درستی وارد کنید
-          </p>
-        </div>
+          <div class="input">
+            <label for="nationalid">کد ملی</label>
+            <input
+              type="number"
+              id="nationalid"
+              v-model.number="user.nationalid"
+            />
+            <p class="error text-right py-2" v-if="nationalidVal === 'invalid'">
+              کد ملی خود را وارد کنید
+            </p>
+            <p
+              class="error text-right py-2"
+              v-if="nationalidVal === 'incorrect'"
+            >
+              کد ملی خود را به درستی وارد کنید
+            </p>
+          </div>
 
-        <div class="input">
-          <label for="postalcode">کد پستی</label>
-          <input
-            type="number"
-            id="postalcode"
-            v-model.number="user.postalcode"
-          />
-          <p class="error text-right py-2" v-if="postalcodeVal === 'invalid'">
-            کدپستی خود را وارد کنید
-          </p>
-          <p class="error text-right py-2" v-if="postalcodeVal === 'incorrect'">
-            کدپستی خود را به درستی وارد کنید
-          </p>
-        </div>
+          <div class="input">
+            <label for="postalcode">کد پستی</label>
+            <input
+              type="number"
+              id="postalcode"
+              v-model.number="user.postalcode"
+            />
+            <p class="error text-right py-2" v-if="postalcodeVal === 'invalid'">
+              کدپستی خود را وارد کنید
+            </p>
+            <p
+              class="error text-right py-2"
+              v-if="postalcodeVal === 'incorrect'"
+            >
+              کدپستی خود را به درستی وارد کنید
+            </p>
+          </div>
 
-        <div class="input">
-          <label for="filenumber">شماره پرونده</label>
-          <input
-            type="number"
-            id="filenumber"
-            v-model.number="user.filenumber"
-          />
-          <p class="error text-right py-2" v-if="filenumberVal === 'invalid'">
-            شماره پرونده خود را وارد کنید
-          </p>
-        </div>
+          <div class="input">
+            <label for="filenumber">شماره پرونده</label>
+            <input
+              type="number"
+              id="filenumber"
+              v-model.number="user.filenumber"
+            />
+            <p class="error text-right py-2" v-if="filenumberVal === 'invalid'">
+              شماره پرونده خود را وارد کنید
+            </p>
+          </div>
 
-        <div class="input">
-          <label for="adress">آدرس</label>
-          <textarea
-            name="adress"
-            id="adress"
-            cols="4"
-            v-model="user.adress"
-          ></textarea>
-        </div>
+          <div class="input">
+            <label for="adress">آدرس</label>
+            <textarea
+              name="adress"
+              id="adress"
+              cols="4"
+              v-model="user.adress"
+            ></textarea>
+          </div>
 
-        <div class="input">
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            v-model="user.groupsname"
-          >
-            <option value="def">لطفا گروه خود را انتخاب کنید</option>
-            <option value="جوشکار">
-              جوشکار
-            </option>
-            <option value="کارگر">
-              کارگر
-            </option>
-            <option value="برق کار">
-              برق کار
-            </option>
-          </select>
-          <p class="error text-right py-2" v-if="user.groupVal === 'invalid'">
-            گروه خود را انتخاب کنید
-          </p>
-        </div>
-        <div class="submit">
-          <button type="submit">ثبت</button>
-        </div>
-      </form>
+          <div class="input">
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              v-model="user.groupsname"
+            >
+              <option value="def">لطفا گروه خود را انتخاب کنید</option>
+              <option value="جوشکار">
+                جوشکار
+              </option>
+              <option value="کارگر">
+                کارگر
+              </option>
+              <option value="برق کار">
+                برق کار
+              </option>
+            </select>
+            <p class="error text-right py-2" v-if="user.groupVal === 'invalid'">
+              گروه خود را انتخاب کنید
+            </p>
+          </div>
+          <div class="submit">
+            <button type="submit">ثبت</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div v-else class="container">
+      <h2 class="text-center bg-secondary text-white p-4">
+        لطفا با حساب کاربری خود وارد شوید
+      </h2>
+      <div class="text-center">
+        <router-link class="btn btn-primary" to="/login">ورود</router-link>
+      </div>
+      <div class="text-center">
+        <router-link class="btn btn-primary mt-2" to="/register"
+          >ثبت نام</router-link
+        >
+      </div>
     </div>
   </div>
 </template>

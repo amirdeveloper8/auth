@@ -18,12 +18,13 @@
             <input type="text" id="name" v-model="name" />
           </div>
           <div class="input">
+            <!-- <UploadImages ref="file" @change="selectedFile" /> -->
             <input
               multiple
               class="file-upload-input"
               type="file"
               id="file"
-              ref="file"
+              ref="files"
               @change="selectedFile"
             />
             <label class="label-file" for="file">
@@ -36,8 +37,24 @@
                 </div>
               </div>
             </label>
-            <div class="file-name text-center d-flex justify-content-center">
-              <p class="text-white">{{ files.name }}</p>
+          </div>
+
+          <div class="text-center p-2 choosen">
+            <div
+              v-for="(file, index) in files"
+              :key="index"
+              class="level my-2 p-2"
+            >
+              <div class="level-left mx-1">
+                <div class="level-item">{{ file.name }}</div>
+              </div>
+              <div class="level-right mx-1">
+                <div class="level-item">
+                  <a class="delete" @click="files.splice(index, 1)"
+                    ><i class="fas fa-times"></i
+                  ></a>
+                </div>
+              </div>
             </div>
           </div>
           <div class="submit">
@@ -64,6 +81,7 @@
 
 <script>
 import axios from "axios";
+import _ from "lodash";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -71,7 +89,7 @@ export default {
   },
   data() {
     return {
-      files: "",
+      files: [],
       name: "",
       message: "",
       error: "",
@@ -79,26 +97,24 @@ export default {
   },
   methods: {
     selectedFile() {
-      const file = this.$refs.file.files[0];
-      this.files = file;
-      this.message = "";
-      this.error = false;
+      const files = this.$refs.files.files;
+      this.files = [...this.files, ...files];
     },
 
     async sendFile() {
       const formData = new FormData();
-      formData.append("files", this.files);
       formData.append("name", this.name);
+      _.forEach(this.files, (file) => {
+        formData.append("files", file);
+      });
+
       try {
         await axios.post("fileCreate", formData);
-        this.message = "فایل شما ارسال شد";
-        this.files = "";
-        this.name = "";
-        this.error = false;
-        console.log(this.files);
+        this.message = "فایل های شما با موفقیت ارسال شد .";
+        this.files = [];
       } catch (err) {
-        console.log(err);
-        this.message = "ارسال ناموفق";
+        console.log("ERRRR:: ", err.response.data);
+        this.message = "مشکلی رخ داده است !";
         this.error = true;
       }
     },
@@ -265,5 +281,38 @@ option {
   margin: auto;
   background: #521751;
   cursor: pointer;
+}
+
+.choosen .level {
+  color: white;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #7e397d77;
+}
+
+.choosen .level a {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(233, 60, 60, 0.788);
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.choosen .level a:hover {
+  background-color: rgb(226, 19, 19);
+  text-decoration: none;
+  transition: background-color 0.5 ease-in;
+}
+
+.choosen .level i {
+  color: rgb(146, 146, 146);
+  cursor: pointer;
+
+  font-size: 13px;
 }
 </style>
